@@ -7,5 +7,9 @@ int main() {
 
 	std::vector<std::string> strings = {"date", "celebrations"};
 	auto parsed = parse(result, strings);
-	std::cout << parsed << std::endl;
+	for (auto& [k, v] : parsed) {
+		std::cout << k << ": " << v << std::endl;
+	}
+	
+	return 0;
 }

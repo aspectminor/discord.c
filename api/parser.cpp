@@ -2,26 +2,30 @@
 #include <iostream>
 #include <cstdio>
 #include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
+#include "rapidjson/filereadstream.h" 
+#include "rapidjson/error/en.h"
 
 using namespace rapidjson;
 using namespace std;
 
-string parse(const string& input, const vector<string>& values) {
-    Document d;
-    d.Parse(input.c_str());
+vector<pair<string, string>> parse(const string& input, const vector<string>& values) {
+    vector<pair<string, string>> result;
+  
+    // Parse the JSON document 
+    rapidjson::Document doc; 
+    doc.Parse(input.c_str()); 
+  
+    // Check if the document is valid 
+    if (doc.HasParseError()) { 
+        std::cerr << "Error: failed to parse JSON" << GetParseError_En(doc.GetParseError())
+                  << std::endl; 
+        return result; 
+    } 
 
-    for (auto& value : values) {
-        if (d.HasMember(value.c_str()) && d[value.c_str()].IsInt()) {
-            int intValue = d[value.c_str()].GetInt();
-            d[value.c_str()].SetInt(intValue + 1);
-        }
-    }
+   /* for (int i; i < values.size(); i++) {
+        auto value = values[i].c_str();
+        if (doc.HasMember(value) && )
+    }*/
 
-    StringBuffer buffer;
-    Writer<StringBuffer> writer(buffer);
-    d.Accept(writer);
-
-    return buffer.GetString();
+    return result;
 }

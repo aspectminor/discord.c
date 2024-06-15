@@ -33,5 +33,5 @@ string fetch(const string& method, const string& path) {
     }
 
     //parse json
-    return "";
+    return res;
 }
