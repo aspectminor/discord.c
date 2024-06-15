@@ -1,3 +1,3 @@
-Discord.cpp
+Discord.c
 ===========
-***A Discord API wrapper, written in cpp***
+***A Discord API wrapper, written in c***
