@@ -1,18 +1,23 @@
-CFLAGS=-Ithird-party/rapidjson/include
-CXXFLAGS=
+CFLAGS=
 
-discord.exe : request.o main.o  parser.o
-		g++ -o discord.exe request.o parser.o main.o -lcurl 
+discord.exe : fetch.o main.o  parser.o
+		gcc -o discord.exe fetch.o main.o -lssl
+
+websocket.exe : fetch.o websocket.o json.o
+	gcc -o websocket.exe fetch.o websocket.o json.o -lssl -lm
 		
 				
-request.o : api/request.cpp 
-		g++ -c api/request.cpp $(CXXFLAGS)
+fetch.o : api/socket/fetch.c 
+		gcc -c api/socket/fetch.c $(CFLAGS)
 
-parser.o : api/parser.cpp
-		g++ -c api/parser.cpp $(CFLAGS)
+main.o : main.c 
+		gcc -c main.c $(CFLAGS)
+	
+websocket.o : api/socket/websocket.c
+		gcc -c api/socket/websocket.c $(CFLAGS) -DDISCORD_TOKEN=\"$(DISCORD_TOKEN)\"
 
-main.o : main.cpp 
-		g++ -c main.cpp $(CFLAGS)
+json.o : lib/json.c
+		gcc -c lib/json.c $(CFLAGS)
 
 clean :
-		rm discord.exe request.o parser.o main.o
+		rm discord.exe fetch.o main.o

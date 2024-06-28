@@ -61,7 +61,12 @@
 		"thread": "cpp",
 		"cinttypes": "cpp",
 		"typeinfo": "cpp",
-		"map": "cpp"
+		"map": "cpp",
+		"inet.h": "c",
+		"in.h": "c",
+		"socket.h": "c",
+		"limits.h": "c",
+		"ctype.h": "c"
 	},
 	"cmake.configureOnOpen": false
 }
