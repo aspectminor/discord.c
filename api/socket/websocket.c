@@ -56,8 +56,7 @@ json_value* json_get_by_name(json_value* json, const char* name) {
 	for (int i = 0; i < json->u.object.length; i++) {
 		printf("json->u.object.values[%d].name = %s\n", i, json->u.object.values[i].name);
 		if (!strcmp(name, json->u.object.values[i].name)) {
-			return &json->u.object.values[i];
-			printf("json_get_by_name2\n");
+			return &json->u.object.values[i].value;
 		}
 	}
 	return NULL;
@@ -84,10 +83,10 @@ int process_frame(const char* frame, size_t buffer_size) {
 	json_value* payload = json_parse(ptr, payload_len);
 	printf("start of getting values\n");
 	if (payload->type == json_object) {
-		json_value* t = json_get_by_name(&payload->u.object, "t");
-		json_value* op = json_get_by_name(&payload->u.object, "op");
-		json_value* s = json_get_by_name(&payload->u.object, "s");
-		json_value* d = json_get_by_name(&payload->u.object, "d");
+		json_value* t = json_get_by_name(payload, "t");
+		json_value* op = json_get_by_name(payload, "op");
+		json_value* s = json_get_by_name(payload, "s");
+		json_value* d = json_get_by_name(payload, "d");
 	
 		switch(op->u.integer) {
 			case 10:
